@@ -25,6 +25,10 @@ class _TelaLoginState extends State<TelaLogin> {
               color: preto
             ),
             ),
+            Image.asset('assets/images/logo.png',
+            width: 150,
+            height: 150,
+            ),
 
           ],
         ),
