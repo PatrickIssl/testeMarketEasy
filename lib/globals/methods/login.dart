@@ -12,24 +12,25 @@ class Login {
         body: corpo);
     var dadosjson = json.decode(response.body);
     var status = dadosjson['response']["status"];
-    if(response.statusCode == 200){
-      if(status == "ok"){
+    if (response.statusCode == 200) {
+      if (status == "ok") {
         token = dadosjson['response']['token'].toString();
         tokenExpiration = dadosjson['response']['tokenExpiration'];
-       try{
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-         prefs.setString("token", token);
-         prefs.setString("tokenExpiration", tokenExpiration.toString());
-       }catch(e){
-         print("e");
-       }
+
+        try {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString("token", token);
+          prefs.setString("tokenExpiration", tokenExpiration);
+        } catch (e) {
+          print("e");
+        }
+
         return "sucesso";
-      }else{
+      } else {
         return "Usuario ou senha incorretos";
       }
-    }else{
+    } else {
       return "Erro ao Carregar Requisição";
     }
-
   }
 }

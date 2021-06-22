@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testemarketeasy/globals/globals.dart';
 import 'package:testemarketeasy/globals/methods/login.dart';
-import 'package:testemarketeasy/globals/methods/produtos.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TelaLogin extends StatefulWidget {
 
@@ -11,6 +11,14 @@ class TelaLogin extends StatefulWidget {
 }
 
 class _TelaLoginState extends State<TelaLogin> {
+
+
+  recuperarToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token")??"";
+    tokenExpiration = prefs.getString("tokenExpiration")??"";
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -18,7 +26,7 @@ class _TelaLoginState extends State<TelaLogin> {
     TextEditingController _controllerLogin = new TextEditingController();
     TextEditingController _controllerSenha = new TextEditingController();
 
-
+    Login.logar("100000", "123456");
 
     return Scaffold(
       body: Container(
