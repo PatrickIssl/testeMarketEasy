@@ -21,7 +21,7 @@ class Login {
         return "Usuario ou senha incorretos";
       }
     }else{
-      return "Erro na requisição de login";
+      return "Erro ao Carregar Requisição";
     }
 
   }
