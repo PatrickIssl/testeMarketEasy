@@ -14,24 +14,68 @@ class _TelaLoginState extends State<TelaLogin> {
   @override
   Widget build(BuildContext context) {
 
+    final _formKey = GlobalKey<FormState>();
+    TextEditingController _controllerLogin = new TextEditingController();
+    TextEditingController _controllerSenha = new TextEditingController();
+
+
+
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            Text("Fazer login",
-            style: TextStyle(
-              fontSize: 12,
-              color: preto
-            ),
-            ),
-            Image.asset('assets/images/logo.png',
-            width: 150,
-            height: 150,
-            ),
+        padding: EdgeInsets.all(10),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("Fazer login",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: preto,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              Image.asset('assets/images/logo.png',
+                width: 150,
+                height: 150,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Este campo é obrigatorio';
+                        }
+                        return null;
+                      },
+                      controller: _controllerLogin,
+                      decoration: InputDecoration(
+                          filled: false,
+                          labelText: "Login",
+                          alignLabelWithHint: true,
 
-          ],
-        ),
+                      ),
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Este campo é obrigatorio';
+                        }
+                        return null;
+                      },
+                      controller: _controllerSenha,
+                      decoration: InputDecoration(
+                          filled: false,
+                          labelText: "Senha"
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
       ),
     );
   }

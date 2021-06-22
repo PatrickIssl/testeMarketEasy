@@ -8,7 +8,7 @@ void main() async{
   runApp(MaterialApp(
     title: 'MarketEasy',
     theme: ThemeData(
-      primarySwatch: Colors.green,
+      primarySwatch: Colors.grey,
     ),
     initialRoute: '/login',
     routes: {
