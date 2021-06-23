@@ -5,7 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 class Login {
+  //classe que realiza o login
   static Future<String> logar(login, senha) async {
+
+    // variavel para colocar o body na requisição
     var corpo = json.encode({"usuario": login, "senha": senha});
 
     http.Response response = await http.post(urlPostLogin,
@@ -13,15 +16,18 @@ class Login {
         body: corpo);
     var dadosjson = json.decode(response.body);
     var status = dadosjson['response']["status"];
+
+    //status for igual a ok ele segue
     if (response.statusCode == 200) {
       if (status == "ok") {
         token = dadosjson['response']['token'].toString();
-        tokenExpiration = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(
-            dadosjson['response']['tokenExpiration'].replaceAll('/', ''));
 
-        print(tokenExpiration);
+        //transformando o formato da data retornada no json
+        tokenExpiration = new DateFormat("dd-MM-yyyy hh:mm:ss").parse(
+            dadosjson['response']['tokenExpiration'].replaceAll('/', '-'));
 
         try {
+          //salvando o token e a data em que expira localmente
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString("token", token);
           prefs.setString("tokenExpiration", tokenExpiration.toString());
