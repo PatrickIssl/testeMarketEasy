@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:testemarketeasy/globals/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class Login {
   static Future<String> logar(login, senha) async {
@@ -15,12 +16,15 @@ class Login {
     if (response.statusCode == 200) {
       if (status == "ok") {
         token = dadosjson['response']['token'].toString();
-        tokenExpiration = dadosjson['response']['tokenExpiration'];
+        tokenExpiration = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(
+            dadosjson['response']['tokenExpiration'].replaceAll('/', ''));
+
+        print(tokenExpiration);
 
         try {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString("token", token);
-          prefs.setString("tokenExpiration", tokenExpiration);
+          prefs.setString("tokenExpiration", tokenExpiration.toString());
         } catch (e) {
           print("e");
         }

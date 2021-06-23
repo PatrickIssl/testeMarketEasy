@@ -12,21 +12,31 @@ class TelaLogin extends StatefulWidget {
 
 class _TelaLoginState extends State<TelaLogin> {
 
+  String data= "";
 
   recuperarToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token")??"";
-    tokenExpiration = prefs.getString("tokenExpiration")??"";
+    data = prefs.getString("tokenExpiration")??"";
   }
 
   @override
   Widget build(BuildContext context) {
-
     final _formKey = GlobalKey<FormState>();
     TextEditingController _controllerLogin = new TextEditingController();
     TextEditingController _controllerSenha = new TextEditingController();
 
-    Login.logar("100000", "123456");
+    recuperarToken();
+
+    if(token != ""){
+      print(data);
+      tokenExpiration = DateTime.parse(data);
+      print(tokenExpiration);
+      DateTime dataExpiracao = DateTime.parse(tokenExpiration.toString());
+        if(dataExpiracao.isAfter(DateTime.now())){
+          Navigator.pushReplacementNamed(context, 'produtos');
+        }
+    }
 
     return Scaffold(
       body: Container(
@@ -78,6 +88,18 @@ class _TelaLoginState extends State<TelaLogin> {
                           labelText: "Senha"
                       ),
                     ),
+                    RaisedButton(
+                        color:Colors.pink,
+                        child: Text("Logar"),
+                        onPressed: (){Login.logar(_controllerLogin.text, _controllerSenha.text);}),
+                    RaisedButton(
+                        color:Colors.pink,
+                        child: Text("Apagar conta"),
+                        onPressed: () async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.remove("token");
+                          prefs.remove("tokenExpiration");
+                        })
                   ],
                 ),
               ),
